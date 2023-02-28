@@ -8,20 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ApplicationDefinition Remove="App.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="2617271.png" />
+    <None Remove="cycle.png" />
+    <None Remove="last.png" />
+    <None Remove="mix.png" />
+    <None Remove="next.png" />
     <None Remove="play.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="App.xaml" />
+    <Resource Include="cycle.png" />
+    <Resource Include="last.png" />
+    <Resource Include="mix.png" />
+    <Resource Include="next.png" />
     <Resource Include="play.png" />
   </ItemGroup>
 
