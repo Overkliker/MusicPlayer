@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Markup;
 using System.Diagnostics;
 using System.Windows;
+using System.Runtime.CompilerServices;
 
 namespace MusicPlayer
 {
@@ -26,6 +27,7 @@ namespace MusicPlayer
         public static List<string> currentFiles = new List<string>();
         public static MediaPlayer player = new MediaPlayer();
         public static int lastIndex;
+
         public static List<string> Open()
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog { IsFolderPicker = true };
@@ -60,6 +62,28 @@ namespace MusicPlayer
             player.Position = (TimeSpan)(PositionTimeMedia == null ? TimeSpan.Zero : PositionTimeMedia);
             player.Play();
             Debug.WriteLine(currentFiles[ind].Replace(@"\", @"\\"));
+        }
+
+        public static void Repeat()
+        {
+            Play(lastIndex);
+        }
+
+        public static void Next(int ind)
+        {
+            Play(ind);
+        }
+
+        public static void Random()
+        {
+            Random rnd = new Random();
+            int ind = rnd.Next(0, currentFiles.Count - 1);
+            Play(ind);
+        }
+
+        public static void Stop()
+        {
+            player.Stop();
         }
     }
 }

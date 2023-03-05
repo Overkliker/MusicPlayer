@@ -27,6 +27,11 @@ namespace MusicPlayer
     public partial class MainWindow : Window
     {
         private bool start = false;
+
+
+        private bool RepeatIsEnbled;
+        private bool RandomIsEnbled;
+        TimeSpan? lastSpan;
         public MainWindow()
         {
 
@@ -44,7 +49,6 @@ namespace MusicPlayer
                         {
                             SlideMusic.Value = (double)Interface.player.Position.TotalSeconds;
                             Timer.Content = $"{(int)Interface.player.Position.Minutes}:{Interface.player.Position.Seconds:00}";
-                            Debug.WriteLine("sdsadasd");
                         }));
                         Thread.Sleep(10);
                     }
@@ -63,6 +67,19 @@ namespace MusicPlayer
         private void Player_MediaEnded(object? sender, EventArgs e)
         {
             start = false;
+            if (RepeatIsEnbled)
+            {
+                Interface.Repeat();
+            }
+            else if (RandomIsEnbled)
+            {
+
+                Interface.Random();
+            }
+            else
+            {
+                Interface.Next(Interface.lastIndex++);
+            }
         }
 
         private void OpenFold_Click(object sender, RoutedEventArgs e)
@@ -85,6 +102,21 @@ namespace MusicPlayer
         private void SlideMusic_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Interface.player.Position = TimeSpan.FromSeconds(SlideMusic.Value);
+        }
+
+        private void Play_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (start)
+            {
+                lastSpan = (TimeSpan)Interface.player.Position;
+                Interface.Stop();
+                start = false;
+            }
+            else
+            {
+                Interface.Play(Interface.lastIndex, lastSpan);
+                start = true;
+            }
         }
     }   
 }
