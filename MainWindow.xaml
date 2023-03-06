@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MusicPlayer"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Uwuntu Player" Height="450" Width="800">
     <Grid Background="#ffdadada">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
@@ -31,24 +31,25 @@
         <Slider x:Name="SlideMusic" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="6" ValueChanged="SlideMusic_ValueChanged"></Slider>
         <Label x:Name="Timer" Grid.Column="6" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom">00:00</Label>
 
-        <Button x:Name="LastMusic" Grid.Column="1" Grid.Row="3" Height="60" Width="60" HorizontalAlignment="Left">
+        <Button x:Name="LastMusic" Grid.Column="1" Grid.Row="3" Height="60" Width="60" HorizontalAlignment="Left" Cursor="Hand" Click="LastMusic_Click">
             <Image Source="last.png"></Image>
         </Button>
         <Button x:Name="Play_btn"  Grid.Column="2" Grid.Row="3" Height="60" Width="60" HorizontalAlignment="Left" Padding="1, 3" Cursor="Hand" Click="Play_btn_Click">
             <Image Source="play.png" ></Image>
         </Button>
-        <Button x:Name="NextMusic" Grid.Column="3" Grid.Row="3" Height="60" Width="60" HorizontalAlignment="Left">
+        <Button x:Name="NextMusic" Grid.Column="3" Grid.Row="3" Height="60" Width="60" HorizontalAlignment="Left" Cursor="Hand" Click="NextMusic_Click">
             <Image Source="next.png"></Image>
         </Button>
-        <Button x:Name="CycleMusic" Grid.Column="4" Grid.Row="3" Height="60" Width="60" HorizontalAlignment="Right" Padding="5, 6">
+        <Button x:Name="CycleMusic" Grid.Column="4" Grid.Row="3" Height="60" Width="60" HorizontalAlignment="Right" Padding="5, 6" Click="CycleMusic_Click" Cursor="Hand">
             <Image Source="cycle.png"></Image>
         </Button>
-        <Button Grid.Column="5" Grid.Row="3" Height="60" Width="60" HorizontalAlignment="Right" Padding="5, 6">
+        <Button x:Name="Random_btn" Grid.Column="5" Grid.Row="3" Height="60" Width="60" HorizontalAlignment="Right" Padding="5, 6" Click="Random_btn_Click" Cursor="Hand">
             <Image Source="mix.png"></Image>
         </Button>
         
         <Slider x:Name="Sound"  Grid.Column="6" Grid.Row="3" Width="300" VerticalAlignment="Center" ValueChanged="Sound_ValueChanged"></Slider>
         <Label Grid.Column="6" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top">Volume</Label>
+        <Label x:Name="Persents" Grid.Column="6" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Bottom">0%</Label>
 
     </Grid>
 </Window>

@@ -29,8 +29,8 @@ namespace MusicPlayer
         private bool start = false;
 
 
-        private bool RepeatIsEnbled;
-        private bool RandomIsEnbled;
+        private bool RepeatIsEnbled = false;
+        private bool RandomIsEnbled = false;
         TimeSpan? lastSpan;
         public MainWindow()
         {
@@ -66,6 +66,7 @@ namespace MusicPlayer
 
         private void Player_MediaEnded(object? sender, EventArgs e)
         {
+            SlideMusic.Value = 0;
             start = false;
             if (RepeatIsEnbled)
             {
@@ -78,7 +79,7 @@ namespace MusicPlayer
             }
             else
             {
-                Interface.Next(Interface.lastIndex++);
+                Interface.Next();
             }
         }
 
@@ -86,17 +87,19 @@ namespace MusicPlayer
         {
             var currentFile = Interface.Open();
             MusicList.ItemsSource = currentFile;
-            Interface.Play(0);
+            if (currentFile.Count != 0) Interface.Play_M(0);
+            
         }
 
         private void Sound_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Interface.player.Volume = Sound.Value / 100;
+            Persents.Content = $"{(int)Sound.Value * 10}%";
         }
 
         private void MusicList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         { 
-            Interface.Play(MusicList.SelectedIndex);
+            Interface.Play_M(MusicList.SelectedIndex);
         }
 
         private void SlideMusic_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -114,9 +117,54 @@ namespace MusicPlayer
             }
             else
             {
-                Interface.Play(Interface.lastIndex, lastSpan);
+                Interface.Play_M(Interface.lastIndex, lastSpan);
                 start = true;
             }
+        }
+
+        private void CycleMusic_Click(object sender, RoutedEventArgs e)
+        {
+            if (RepeatIsEnbled)
+            {
+                RepeatIsEnbled = false;
+                CycleMusic.Background = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183)); ;
+                CycleMusic.BorderBrush = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183)); ;
+            }
+            else
+            {
+                RepeatIsEnbled = true;
+                CycleMusic.Background = new SolidColorBrush(Color.FromArgb(250, 196, 136, 232));
+                CycleMusic.BorderBrush = new SolidColorBrush(Color.FromArgb(250, 196, 136, 232));
+
+            }
+        }
+
+        private void Random_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (RandomIsEnbled && !RepeatIsEnbled)
+            {
+                RandomIsEnbled = false;
+                Random_btn.Background = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183)); ;
+                Random_btn.BorderBrush = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183)); ;
+
+            }
+            else
+            {
+                RandomIsEnbled = true;
+
+                Random_btn.Background = new SolidColorBrush(Color.FromArgb(250, 196, 136, 232));
+                Random_btn.BorderBrush = new SolidColorBrush(Color.FromArgb(250, 196, 136, 232));
+            }
+        }
+
+        private void LastMusic_Click(object sender, RoutedEventArgs e)
+        {
+            Interface.Back();
+        }
+
+        private void NextMusic_Click(object sender, RoutedEventArgs e)
+        {
+            Interface.Next();
         }
     }   
 }

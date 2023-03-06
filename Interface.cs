@@ -49,36 +49,66 @@ namespace MusicPlayer
                         currentNames.Add(name[name.Length - 1]);
                     }
                 }
-                currentFiles = currentPaths;
-                return currentNames;
+                if (currentPaths.Count != 0)
+                {
+                    currentFiles = currentPaths;
+                    return currentNames;
+                }
+
             }
             return null;
         }
 
-        public static void Play(int ind, TimeSpan? PositionTimeMedia = null)
+        public static void Play_M(int ind, TimeSpan? PositionTimeMedia = null)
         {
-            lastIndex = ind;
-            player.Open(new Uri(currentFiles[ind].Replace(@"\", @"\\").ToString(), UriKind.Absolute));
-            player.Position = (TimeSpan)(PositionTimeMedia == null ? TimeSpan.Zero : PositionTimeMedia);
-            player.Play();
-            Debug.WriteLine(currentFiles[ind].Replace(@"\", @"\\"));
+            try
+            {
+                lastIndex = ind;
+                player.Open(new Uri(currentFiles[ind].Replace(@"\", @"\\").ToString(), UriKind.Absolute));
+                player.Position = (TimeSpan)(PositionTimeMedia == null ? TimeSpan.Zero : PositionTimeMedia);
+                player.Play();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
 
         public static void Repeat()
         {
-            Play(lastIndex);
+            Play_M(lastIndex, TimeSpan.Zero);
         }
 
-        public static void Next(int ind)
+        public static void Next()
         {
-            Play(ind);
+            int ind = lastIndex + 1;
+            if (ind <= currentFiles.Count - 1)
+            {
+                Debug.WriteLine(ind);
+                Play_M(ind, TimeSpan.Zero);
+            }
+            
+        }
+
+        public static void Back()
+        {
+            int ind = lastIndex - 1;
+
+            if (ind >= 0)
+            {
+                Debug.WriteLine(ind);
+                Play_M(ind, TimeSpan.Zero);
+            }
+                
         }
 
         public static void Random()
         {
             Random rnd = new Random();
             int ind = rnd.Next(0, currentFiles.Count - 1);
-            Play(ind);
+            Debug.WriteLine(currentFiles[ind].Replace(@"\", @"\\"));
+            Debug.WriteLine(ind);
+            Play_M(ind, TimeSpan.Zero);
         }
 
         public static void Stop()
